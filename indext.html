@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Test API</title>
+		<style>
+			body {
+				font-family: Arial;
+				font-size: 1rem;
+				margin: 0;
+			}
+			.container {
+				height: 100vh;
+			}
+			.title {
+				text-align: center;
+				padding: 0.3rem;
+			}
+
+			.pokemon-list {
+				display: grid;
+				grid-template-columns: 1fr 100px 1fr;
+				max-width: 70%;
+				margin: auto;
+			}
+			.pokemon {
+				border: 1px solid black;
+				padding: 0.7rem;
+				background: #f5f5f5;
+				text-align: center;
+			}
+			.vs {
+				font-size: 2rem;
+				text-align: center;
+				margin: auto;
+			}
+			img {
+				width: 100%;
+			}
+			p {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1 class="title">Pokemon VS Pokemon</h1>
+			<div class="pokemon-list">
+				<div class="pokemon-1">
+					<img src="78.png" alt="" />
+					<p></p>
+				</div>
+				<div class="vs">VS</div>
+				<div class="pokemon-2">
+					<img src="78.png" alt="" />
+					<p></p>
+				</div>
+			</div>
+		</div>
+		<script>
+			/* 			function runScript() {
+				fetch("https://pokeapi.co/api/v2/berry-flavor/2")
+					.then((response) => response.json())
+					.then((data) => console.log(data.berries));
+			} */
+
+			function fetcher(id, num) {
+				var url = "https://pokeapi.co/api/v2/pokemon/" + id;
+				fetch(url).then(function (response) {
+					response.json().then(function (data) {
+						//console.log(data.name);
+						//console.log(data.sprites.front_default);
+						pokePicker(data, num);
+					});
+				});
+			}
+
+			function pokePicker(data, num) {
+				//document.querySelector(`.pokemon-${num} p`).innerHTML = data.name;
+				currentPokemon = document.querySelector(`.pokemon-${num}`);
+				//console.log(currentPokemon);
+				var image = currentPokemon.querySelector("img");
+				image.setAttribute("src", data.sprites.front_default);
+				var name = currentPokemon.querySelector("p");
+				name.textContent = data.name.toUpperCase();
+			}
+			function runBoth() {
+				var randomNumber1 = Math.floor(Math.random() * 100);
+				var randomNumber2 = Math.floor(Math.random() * 100);
+				fetcher(randomNumber1, 1);
+				fetcher(randomNumber2, 2);
+			}
+			runBoth();
+		</script>
+	</body>
+</html>
